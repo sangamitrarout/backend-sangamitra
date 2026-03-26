@@ -7,7 +7,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production   # 👈 must match the environment you created in GitHub
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -23,9 +22,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Deploy to Render
-        uses: render-examples/deploy-action@v1
-        with:
-          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
-          apiKey: ${{ secrets.RENDER_API_KEY }}
+      - name: Trigger Render Deploy
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
 
