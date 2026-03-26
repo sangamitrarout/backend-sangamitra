@@ -5,10 +5,11 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment: production   # 👈 must match the environment you created in GitHub
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -22,9 +23,8 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Example deploy step (Render)
       - name: Deploy to Render
-        uses: johnbeynon/render-deploy-action@v1
+        uses: render-examples/deploy-action@v1
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
           apiKey: ${{ secrets.RENDER_API_KEY }}
